@@ -309,7 +309,8 @@ fn cache_file_path() -> Result<PathBuf, DynError> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::time::Duration;
+    use std::fs;
+    use std::time::{Duration, SystemTime};
 
     #[test]
     fn normalizes_simple_type() {
@@ -341,5 +342,67 @@ mod tests {
             types: vec![],
         };
         assert!(!stale.is_fresh(Duration::from_secs(1)));
+    }
+
+    #[test]
+    fn write_templates_overwrites_file() {
+        let path = temp_path("overwrite");
+        fs::write(&path, "old content").unwrap();
+
+        let templates = vec![
+            Template {
+                name: "Rust".to_string(),
+                content: "target/\n".to_string(),
+            },
+            Template {
+                name: "Node".to_string(),
+                content: "node_modules/\n".to_string(),
+            },
+        ];
+
+        write_templates(&path, true, false, &templates).unwrap();
+
+        let written = fs::read_to_string(&path).unwrap();
+        let expected = "\
+# --- Rust ---\n\
+target/\n\n\
+# --- Node ---\n\
+node_modules/\n\n";
+        assert_eq!(written, expected);
+
+        let _ = fs::remove_file(&path);
+    }
+
+    #[test]
+    fn write_templates_appends_and_skips_duplicates() {
+        let path = temp_path("append");
+        fs::write(&path, "Existing\ntarget/\n").unwrap();
+
+        let templates = vec![
+            Template {
+                name: "Rust".to_string(),
+                content: "target/\n".to_string(),
+            },
+            Template {
+                name: "Node".to_string(),
+                content: "node_modules/\n".to_string(),
+            },
+        ];
+
+        write_templates(&path, false, false, &templates).unwrap();
+
+        let written = fs::read_to_string(&path).unwrap();
+        let expected = "Existing\ntarget/\n\n# --- Node ---\nnode_modules/\n\n";
+        assert_eq!(written, expected);
+
+        let _ = fs::remove_file(&path);
+    }
+
+    fn temp_path(name: &str) -> PathBuf {
+        let unique = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap()
+            .as_nanos();
+        std::env::temp_dir().join(format!("gitignore-downloader-{name}-{unique}"))
     }
 }
