@@ -1,6 +1,12 @@
-# gitignore-downloader
+<h1 align="center">gitignore-downloader</h1>
+<p align="center">Fetch and compose GitHub's <code>.gitignore</code> templates from your terminal.</p>
+<p align="center">
+  <a href="https://crates.io/crates/gitignore-downloader"><img src="https://img.shields.io/crates/v/gitignore-downloader.svg" alt="Crates.io"></a>
+  <a href="https://crates.io/crates/gitignore-downloader"><img src="https://img.shields.io/crates/d/gitignore-downloader.svg" alt="Downloads"></a>
+  <a href="https://github.com/cesarferreira/gitignore/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
+</p>
 
-Fetch and compose GitHub's `.gitignore` templates from your terminal. When no type is provided, a fuzzy picker helps you choose; when you pass a type, it downloads immediately.
+When no type is provided, a fuzzy picker helps you choose; when you pass a type, it downloads immediately.
 
 [List of available templates](https://github.com/github/gitignore)
 
