@@ -48,3 +48,7 @@ The tool caches the template list under the XDG cache dir and will reuse it unti
 
 - Build: `cargo build`
 - Test: `cargo test`
+
+## License
+
+MIT
