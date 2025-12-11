@@ -373,7 +373,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "gitignore"
+name = "gitignore-downloader"
 version = "0.1.0"
 dependencies = [
  "clap",

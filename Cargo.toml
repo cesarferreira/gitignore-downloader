@@ -1,5 +1,5 @@
 [package]
-name = "gitignore"
+name = "gitignore-downloader"
 version = "0.1.0"
 edition = "2024"
 
@@ -12,5 +12,5 @@ serde = { version = "1.0.217", features = ["derive"] }
 serde_json = "1.0.138"
 
 [[bin]]
-name = "gitignore"
+name = "gi"
 path = "src/main.rs"

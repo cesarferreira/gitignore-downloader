@@ -1,4 +1,4 @@
-# gitignore (Rust)
+# gitignore-downloader
 
 Fetch and compose GitHub's `.gitignore` templates from your terminal. When no type is provided, a fuzzy picker helps you choose; when you pass a type, it downloads immediately.
 
@@ -7,26 +7,28 @@ Fetch and compose GitHub's `.gitignore` templates from your terminal. When no ty
 ## Install
 
 ```bash
-cargo install --path .
+cargo install gitignore-downloader
 ```
+
+This installs the `gi` binary.
 
 ## Usage
 
 ```bash
 # Fuzzy pick a template
-gitignore
+gi
 
 # Direct download without the picker
-gitignore rust
+gi rust
 
 # List available templates (cached)
-gitignore --list
+gi --list
 
 # Show the template without writing it
-gitignore --dry-run node
+gi --dry-run node
 
 # Overwrite a custom path
-gitignore --output other.gitignore --overwrite Rust MacOS
+gi --output other.gitignore --overwrite Rust MacOS
 ```
 
 Key flags:

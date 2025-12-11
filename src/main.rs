@@ -11,7 +11,7 @@ use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 const TYPES_URL: &str = "https://api.github.com/repos/github/gitignore/contents";
 const RAW_BASE_URL: &str = "https://raw.githubusercontent.com/github/gitignore/master/";
-const USER_AGENT: &str = "gitignore-rust-cli";
+const USER_AGENT: &str = concat!("gitignore-downloader/", env!("CARGO_PKG_VERSION"));
 const CACHE_FILE: &str = "types.json";
 
 type DynError = Box<dyn std::error::Error>;
@@ -301,7 +301,7 @@ fn write_cached_types(types: &[String]) -> Result<(), DynError> {
 }
 
 fn cache_file_path() -> Result<PathBuf, DynError> {
-    let proj = ProjectDirs::from("dev", "gitignore", "gitignore")
+    let proj = ProjectDirs::from("dev", "gitignore-downloader", "gitignore-downloader")
         .ok_or("Cannot determine cache directory")?;
     Ok(proj.cache_dir().join(CACHE_FILE))
 }
